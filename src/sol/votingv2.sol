@@ -8,9 +8,9 @@ contract Voting {
     string votedFor; 
   }
 
-  mapping (address => voter) voterInfo; ["0x1": {tokensUsed: 10, votedFor: "Rama"}, "0x2": {tokensUsed: 50, votedFor: "Nick"}, "0x3": {tokensUsed: 0, votedFor: "Jose"}}}]
-  mapping (string => uint) votesReceived; ["Rama": 10, "pedro": 0, "jose": 10]
-  string[] candidateList; ["Rama", "Nick", "Jose"]
+  mapping (address => voter) voterInfo;
+  mapping (string => uint) votesReceived;
+  string[] candidateList;
 
  constructor(string[] memory candidateNames) {
     candidateList = candidateNames;
@@ -22,7 +22,7 @@ contract Voting {
 
   function voteForCandidate(uint index, uint votesInTokens) public {
     require(voterInfo[msg.sender].tokensUsed == uint(0), "you have already voted");
-    votesReceived[candidateList[index]] = votesInTokens;
+    votesReceived[candidateList[index]] += votesInTokens;
     voterInfo[msg.sender].tokensUsed = votesInTokens;
     voterInfo[msg.sender].votedFor = candidateList[index];
   }
